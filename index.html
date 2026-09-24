@@ -317,27 +317,24 @@
     display:grid; grid-template-columns:1fr; gap:44px; padding-bottom:56px;
     border-bottom:1px solid rgba(255,255,255,.12);
   }
-  @media (min-width:760px){ .footer-grid{ grid-template-columns:1.3fr .8fr .8fr .9fr; gap:32px; } }
-  .footer-brand img{ height:44px; width:auto; display:block; }
-  .footer-brand p{ font-size:14.5px; line-height:1.7; color:rgba(255,255,255,.65); max-width:34ch; margin:16px 0 22px; }
-  .footer-social{ display:flex; gap:10px; }
-  .footer-social a{
-    width:38px; height:38px; border-radius:9px; background:rgba(255,255,255,.08);
-    display:flex; align-items:center; justify-content:center; text-decoration:none;
-    transition:background-color .18s ease, transform .18s ease;
-  }
-  .footer-social a:hover{ background:var(--green-bright); transform:translateY(-2px); }
-  .footer-social svg{ width:17px; height:17px; color:#fff; }
-  .footer-col h4{ font-family:var(--sans); font-size:13.5px; font-weight:800; letter-spacing:.03em; color:#fff; margin:0 0 18px; text-transform:uppercase; }
-  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
-  .footer-col a{ text-decoration:none; color:rgba(255,255,255,.68); font-size:14.5px; transition:color .15s ease; }
+  @media (min-width:760px){ .footer-grid{ grid-template-columns:1.4fr .85fr .85fr .85fr; gap:32px; } }
+  .footer-brand img{ height:72px; width:auto; display:block; }
+  .footer-brand p{ font-size:14.5px; line-height:1.7; color:rgba(255,255,255,.65); max-width:32ch; margin:18px 0 22px; }
+  .footer-brand-divider{ height:1px; background:rgba(255,255,255,.14); margin:0 0 20px; max-width:32ch; }
+  .footer-brand address{ font-style:normal; font-size:14.5px; line-height:1.9; color:rgba(255,255,255,.65); }
+  .footer-brand address a{ color:rgba(255,255,255,.65); text-decoration:none; }
+  .footer-brand address a:hover{ color:#fff; }
+  .footer-col h4{ font-family:var(--sans); font-size:13px; font-weight:800; letter-spacing:.04em; color:rgba(255,255,255,.85); margin:0 0 18px; text-transform:uppercase; }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:13px; }
+  .footer-col a{ text-decoration:none; color:rgba(255,255,255,.65); font-size:14.5px; transition:color .15s ease; }
   .footer-col a:hover{ color:#fff; }
-  .footer-contact li{ display:flex; align-items:flex-start; gap:10px; color:rgba(255,255,255,.68); font-size:14.5px; }
-  .footer-contact svg{ width:16px; height:16px; flex:none; margin-top:2px; color:#5FD68A; }
   .footer-bottom{
-    display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center;
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; align-items:center;
     padding:22px 0; font-size:13px; color:rgba(255,255,255,.5);
   }
+  .footer-legal{ display:flex; flex-wrap:wrap; gap:22px; }
+  .footer-legal a{ color:rgba(255,255,255,.65); text-decoration:none; font-size:13px; transition:color .15s ease; }
+  .footer-legal a:hover{ color:#fff; }
 
 </style>
 </head>
@@ -653,21 +650,17 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="data:image/png;base64,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" alt="FormWork Human Capital">
-        <p>Building Human Infrastructure. HR consulting and people systems for Nigerian businesses.</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/formwork_hr/" aria-label="FormWork on Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/company/formwork-hr/" aria-label="FormWork on LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.8" r="1"/><path d="M11.5 17v-4.2c0-1.6 1-2.6 2.4-2.6 1.3 0 2.1.9 2.1 2.6V17"/></svg>
-          </a>
-        </div>
+        <p>Building the people infrastructure Nigerian businesses need.</p>
+        <div class="footer-brand-divider"></div>
+        <address>
+          <a href="mailto:hello@formwork.com.ng">hello@formwork.com.ng</a><br>
+          Lagos, Nigeria
+        </address>
       </div>
       <div class="footer-col">
-        <h4>HR Consulting</h4>
+        <h4>HR Solutions</h4>
         <ul>
-          <li><a href="#services">HR Consulting Services</a></li>
-          <li><a href="#hr-review">HR Audit &amp; Review</a></li>
+          <li><a href="#hr-review">HR Review</a></li>
           <li><a href="#hr-foundations">HR Foundations &amp; Compliance</a></li>
           <li><a href="#organisation-design">Organisation Design &amp; Role Clarity</a></li>
           <li><a href="#performance-reward">Performance &amp; Reward</a></li>
@@ -680,30 +673,25 @@
           <li><a href="#learning">Learning &amp; Capability</a></li>
           <li><a href="#toolkit">HR Toolkit</a></li>
         </ul>
-        <h4 style="margin-top:28px;">Resources</h4>
-        <ul>
-          <li><a href="#insights">Insights</a></li>
-        </ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
-        <ul style="margin-bottom:22px;">
-          <li><a href="#about">About FormWork</a></li>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="https://selar.com/014444dcpe" target="_blank" rel="noopener">Free Employment Contract</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="#about-leadership">Leadership</a></li>
-          <li><a href="#privacy">Privacy Notice</a></li>
-          <li><a href="#terms">Website Terms</a></li>
-        </ul>
-        <ul class="footer-contact">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 6.5 12 13l9-6.5"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg> hello@formwork.com.ng</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2.2z"/></svg> +234 813 472 2978</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Lagos, Nigeria</li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© FormWork Human Capital Ltd. All rights reserved.</span>
-      <span>RC 9572859 · Lagos, Nigeria</span>
+      <span>© 2026 FormWork Human Capital Ltd. · RC 9572859</span>
+      <div class="footer-legal">
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="https://www.instagram.com/formwork_hr" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/formwork-hr" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
   </div>
 </footer>
