@@ -41,7 +41,12 @@
   .reveal-stagger > *{ opacity:0; transition:opacity 1.05s cubic-bezier(.16,.7,.2,1), transform 1.05s cubic-bezier(.16,.7,.2,1); }
   .reveal-stagger > *:nth-child(odd){ transform:translateX(-90px); }
   .reveal-stagger > *:nth-child(even){ transform:translateX(90px); }
-  .reveal-stagger.is-visible > *{ opacity:1; transform:translateX(0); }
+  .reveal-stagger.is-visible > *{ opacity:1; }
+  /* higher specificity than the odd/even push rules (including their mobile override) so this
+     always wins regardless of source order — the earlier version relied on cascade order alone,
+     which broke inside the mobile media query below */
+  .reveal-stagger.is-visible > *:nth-child(odd),
+  .reveal-stagger.is-visible > *:nth-child(even){ transform:translateX(0); }
   .reveal-stagger.is-visible > *:nth-child(1){ transition-delay:.05s; }
   .reveal-stagger.is-visible > *:nth-child(2){ transition-delay:.20s; }
   .reveal-stagger.is-visible > *:nth-child(3){ transition-delay:.35s; }
@@ -191,9 +196,20 @@
   }
   .feature-card:hover .feature-card__icon{ transform:scale(1.1) rotate(-5deg); }
   .feature-card__icon svg{ width:24px; height:24px; }
+  .feature-card__body{ display:flex; flex-direction:column; flex:1; min-width:0; }
   .feature-card h3{ font-family:var(--sans); font-weight:800; font-size:17px; margin:0 0 10px; }
   .feature-card p{ font-size:14.5px; line-height:1.6; color:rgba(255,255,255,.78); margin:0 0 14px; flex:1; }
   .feature-card__dest{ font-size:13px; font-weight:700; color:#B9E4C9; margin-top:auto; }
+
+  /* mobile: icon sits beside the text as a compact row instead of stacked above it —
+     stacked full-width cards with a top icon read as a lot of dead space on narrow screens */
+  @media (max-width:819px){
+    .feature-card{ flex-direction:row; align-items:flex-start; gap:14px; padding:20px 18px; }
+    .feature-card__icon{ margin-bottom:0; width:40px; height:40px; }
+    .feature-card__icon svg{ width:18px; height:18px; }
+    .feature-card h3{ font-size:15.5px; margin-bottom:6px; }
+    .feature-card p{ font-size:13.5px; margin-bottom:10px; }
+  }
 
   @media (max-width:719px){ .feature-panel{ padding:64px 0; } }
 
@@ -216,7 +232,7 @@
 
   @media (max-width:719px){ .audit-wrap{ padding:64px 0; } .audit-card{ border-radius:18px; } }
   @media (max-width:719px){
-    .capabilities, .principles-process, .testimonial, .work-with, .insights-section, .closing{ padding:64px 0; }
+    .capabilities, .principles-process, .testimonial, .closing{ padding:64px 0; }
   }
 
   /* ---------- consulting capabilities: 2x2 grid ---------- */
@@ -230,7 +246,7 @@
     background:#fff; border:1px solid var(--stone); border-radius:14px; padding:28px 26px;
     border-top:3px solid var(--blue); transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s ease, border-color .22s ease;
   }
-  .capability-card:nth-child(even){ border-top-color:var(--green-bright); }
+  .capability-grid li:nth-child(even) .capability-card{ border-top-color:var(--green-bright); }
   .capability-card:hover{ transform:translateY(-4px); box-shadow:0 20px 36px -18px rgba(13,27,42,.25); }
   .capability-card__index{ font-family:var(--serif); font-size:14px; font-weight:700; color:var(--slate); }
   .capability-card h3{ font-family:var(--sans); font-weight:800; font-size:18px; margin:0; }
@@ -272,27 +288,30 @@
   .testimonial__cta{ display:inline-flex; align-items:center; gap:6px; margin-top:26px; font-weight:700; font-size:14.5px; color:var(--blue-bright); text-decoration:none; }
   .testimonial__cta:hover{ color:var(--green-bright); }
 
-  /* ---------- learning + toolkit ---------- */
-  .work-with{ background:var(--ivory); padding:100px 0 96px; }
-  .work-grid{ display:grid; grid-template-columns:1fr; gap:20px; max-width:980px; margin:0 auto; }
-  @media (min-width:800px){ .work-grid{ grid-template-columns:1fr 1fr; } }
-  .work-card{ background:#fff; border-radius:16px; padding:36px 32px; border-top:4px solid var(--blue); }
-  .work-card:nth-child(2){ border-top-color:var(--green-bright); }
-  .work-card h3{ font-size:21px; margin:0 0 12px; }
-  .work-card p{ font-size:15px; line-height:1.65; color:var(--slate); margin:0 0 22px; }
-  .work-card__fact{ display:inline-block; font-size:13px; font-weight:700; color:var(--green-bright); background:rgba(31,138,71,.1); padding:6px 14px; border-radius:99px; margin-bottom:18px; }
-
-  /* ---------- insights (trimmed) ---------- */
-  .insights-section{ background:#fff; padding:100px 0 96px; }
-  .insights-head{ max-width:640px; margin:0 auto 40px; text-align:center; }
-  .insights-featured{
-    max-width:820px; margin:0 auto; background:var(--ivory); border-radius:16px; padding:40px;
-    display:flex; flex-direction:column; gap:14px; text-align:left; border:1px dashed var(--stone);
+  /* ---------- learning + toolkit, condensed to a slim bar ---------- */
+  .work-with-slim{ background:var(--ivory); padding:56px 0; }
+  @media (max-width:719px){ .work-with-slim{ padding:44px 0; } }
+  .slim-bar{
+    display:flex; flex-direction:column; gap:24px; align-items:flex-start;
+    max-width:1080px; margin:0 auto;
   }
-  .insights-featured__label{ font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--slate); }
-  .insights-featured h3{ font-size:22px; margin:0; color:var(--slate); }
-  .insights-featured p{ font-size:14.5px; color:var(--slate); margin:0; font-style:italic; }
-  .insights-cta{ text-align:center; margin-top:34px; }
+  @media (min-width:860px){ .slim-bar{ flex-direction:row; align-items:center; justify-content:space-between; gap:40px; } }
+  .slim-bar__text{ max-width:520px; }
+  .slim-bar__text .eyebrow{ margin-bottom:10px; }
+  .slim-bar__lede{ font-size:15px; line-height:1.6; color:var(--slate); margin:0; }
+  .slim-bar__links{ display:flex; flex-wrap:wrap; gap:14px; flex:none; }
+
+  /* ---------- insights, condensed to one line ---------- */
+  .insights-line{ background:#fff; padding:48px 0; border-top:1px solid var(--stone); border-bottom:1px solid var(--stone); }
+  .insights-line__text{
+    margin:0; text-align:center; font-size:16px; line-height:1.8; color:var(--slate);
+  }
+  .insights-line__text a{
+    color:var(--blue-bright); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;
+  }
+  .insights-line__text a:hover{ color:var(--green-bright); }
+  .insights-line__text a svg{ transition:transform .18s ease; }
+  .insights-line__text a:hover svg{ transform:translateX(3px); }
 
   /* ---------- about preview + final cta, merged, dark ---------- */
   .closing{ background:var(--ink); color:#fff; padding:104px 0 110px; }
@@ -428,41 +447,51 @@
         <li>
           <a class="feature-card" href="#hr-review">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-            <h3>We are not sure where the gaps are</h3>
-            <p>An HR Audit &amp; Review examines current documentation, processes and working practices and prioritises what to fix first.</p>
-            <span class="feature-card__dest">HR Audit &amp; Review →</span>
+            <div class="feature-card__body">
+              <h3>We are not sure where the gaps are</h3>
+              <p>An HR Audit &amp; Review examines current documentation, processes and working practices and prioritises what to fix first.</p>
+              <span class="feature-card__dest">HR Audit &amp; Review →</span>
+            </div>
           </a>
         </li>
         <li>
           <a class="feature-card" href="#hr-foundations">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-            <h3>Our HR foundations need strengthening</h3>
-            <p>Strengthen contracts, policies, handbooks, onboarding and the core processes behind a consistent employee experience.</p>
-            <span class="feature-card__dest">HR Foundations &amp; Compliance →</span>
+            <div class="feature-card__body">
+              <h3>Our HR foundations need strengthening</h3>
+              <p>Strengthen contracts, policies, handbooks, onboarding and the core processes behind a consistent employee experience.</p>
+              <span class="feature-card__dest">HR Foundations &amp; Compliance →</span>
+            </div>
           </a>
         </li>
         <li>
           <a class="feature-card" href="#organisation-design">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M12 7.2V13M12 13 6.4 17.3M12 13l5.6 4.3"/></svg></span>
-            <h3>Roles and reporting lines are unclear</h3>
-            <p>Clarify how work is organised, who is accountable for what, and where decisions should sit.</p>
-            <span class="feature-card__dest">Organisation Design &amp; Role Clarity →</span>
+            <div class="feature-card__body">
+              <h3>Roles and reporting lines are unclear</h3>
+              <p>Clarify how work is organised, who is accountable for what, and where decisions should sit.</p>
+              <span class="feature-card__dest">Organisation Design &amp; Role Clarity →</span>
+            </div>
           </a>
         </li>
         <li>
           <a class="feature-card" href="#performance-reward">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
-            <h3>Performance decisions are inconsistent</h3>
-            <p>Build clearer expectations and more consistent approaches to probation, progression and reward.</p>
-            <span class="feature-card__dest">Performance &amp; Reward →</span>
+            <div class="feature-card__body">
+              <h3>Performance decisions are inconsistent</h3>
+              <p>Build clearer expectations and more consistent approaches to probation, progression and reward.</p>
+              <span class="feature-card__dest">Performance &amp; Reward →</span>
+            </div>
           </a>
         </li>
         <li>
           <a class="feature-card" href="#hr-advisory">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5z"/></svg></span>
-            <h3>We need experienced HR judgement</h3>
-            <p>Access experienced HR support for employee matters, policy questions and decisions that need judgement, not another template.</p>
-            <span class="feature-card__dest">HR Advisory →</span>
+            <div class="feature-card__body">
+              <h3>We need experienced HR judgement</h3>
+              <p>Access experienced HR support for employee matters, policy questions and decisions that need judgement, not another template.</p>
+              <span class="feature-card__dest">HR Advisory →</span>
+            </div>
           </a>
         </li>
       </ul>
@@ -527,46 +556,6 @@
     </div>
   </section>
 
-  <!-- WHY FORMWORK + HOW FORMWORK WORKS, merged -->
-  <section class="principles-process">
-    <div class="wrap">
-      <div class="pp-grid">
-        <div class="pp-col reveal">
-          <h3>Why FormWork</h3>
-          <div class="principle">
-            <strong>Practical by Design</strong>
-            <span>Systems should work in day-to-day operations, not simply exist on paper.</span>
-          </div>
-          <div class="principle">
-            <strong>Built for the Nigerian Context</strong>
-            <span>HR structures and people practices are grounded in the realities and requirements Nigerian employers operate within.</span>
-          </div>
-          <div class="principle">
-            <strong>Built to Fit the Organisation</strong>
-            <span>FormWork designs around the organisation's operating model, stage, risks and internal capability — building people systems that are strong enough to support the business and practical enough to operate day to day.</span>
-          </div>
-        </div>
-        <div class="pp-col reveal">
-          <h3>How FormWork Works</h3>
-          <div class="steps">
-            <div class="step">
-              <span class="step__num">1</span>
-              <div><strong>Understand the current state</strong><span>Review the organisation, the problem and what is already in place.</span></div>
-            </div>
-            <div class="step">
-              <span class="step__num">2</span>
-              <div><strong>Design for the organisation</strong><span>Build or improve the systems required for the way the business actually works.</span></div>
-            </div>
-            <div class="step">
-              <span class="step__num">3</span>
-              <div><strong>Enable practical use</strong><span>Clarify ownership, tools and working practices so the solution does not stop at a document.</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- CLIENT PERSPECTIVE -->
   <section class="testimonial">
     <div class="wrap">
@@ -580,44 +569,31 @@
     </div>
   </section>
 
-  <!-- LEARNING & CAPABILITY + HR TOOLKIT -->
-  <section class="work-with" id="learning">
+  <!-- LEARNING & CAPABILITY + HR TOOLKIT — slim bar; full detail lives on their own pages -->
+  <section class="work-with-slim" id="learning">
     <div class="wrap">
-      <div class="capabilities__head reveal">
-        <p class="eyebrow">Other ways to work with FormWork</p>
-        <h2>Build capability or use practical HR resources.</h2>
-      </div>
-      <div class="work-grid reveal-stagger">
-        <div class="work-card" id="learning-card">
-          <h3>Learning &amp; Capability</h3>
-          <p>Practical learning for HR professionals, managers, team leads and organisations that need people-management capability to improve alongside their systems.</p>
-          <a class="btn btn--outline-light" href="#learning">Explore Learning &amp; Capability</a>
+      <div class="slim-bar reveal">
+        <div class="slim-bar__text">
+          <p class="eyebrow">Other ways to work with FormWork</p>
+          <p class="slim-bar__lede">Build people-management capability, or get a practical head start with 40 editable HR documents across 10 folders.</p>
         </div>
-        <div class="work-card" id="toolkit">
-          <span class="work-card__fact">40 documents · 10 folders · ₦25,000</span>
-          <h3>HR Toolkit</h3>
-          <p>An editable collection of 40 practical HR documents organised into 10 folders for Nigerian businesses that need a stronger starting point for everyday HR documentation.</p>
-          <a class="btn btn--primary" href="https://selar.com/45712a2cjm" target="_blank" rel="noopener">Explore the HR Toolkit</a>
+        <div class="slim-bar__links">
+          <a class="btn btn--outline-light" href="#learning">Explore Learning &amp; Capability</a>
+          <span id="toolkit"></span>
+          <a class="btn btn--primary" href="https://selar.com/45712a2cjm" target="_blank" rel="noopener">Explore the HR Toolkit — ₦25,000</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- INSIGHTS (trimmed to a teaser — full library lives on /insights/) -->
-  <section class="insights-section" id="insights">
+  <!-- INSIGHTS — a single line; the library itself lives on /insights/ -->
+  <section class="insights-line" id="insights">
     <div class="wrap">
-      <div class="insights-head reveal">
-        <p class="eyebrow" style="justify-content:center;">Insights</p>
-        <h2>Practical thinking for Nigerian employers and HR teams.</h2>
-      </div>
-      <div class="insights-featured reveal">
-        <span class="insights-featured__label">Featured Insight — placeholder</span>
-        <h3>[Article title pulled from the seven approved Insights once published]</h3>
-        <p>Standfirst/excerpt populates automatically from the WordPress post once the approved Insights are live — not fabricated here.</p>
-      </div>
-      <div class="insights-cta reveal">
-        <a class="btn btn--outline-light" href="#insights">View All Insights <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
+      <p class="insights-line__text reveal">
+        <span class="eyebrow" style="margin:0 10px 0 0; vertical-align:middle;">Insights</span>
+        Practical thinking for Nigerian employers and HR teams —
+        <a href="#insights">read the latest HR thinking <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </p>
     </div>
   </section>
 
