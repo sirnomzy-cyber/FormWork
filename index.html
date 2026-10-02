@@ -71,6 +71,11 @@
   nav.primary-nav{ display:none; }
   nav.primary-nav ul{ list-style:none; display:flex; gap:32px; margin:0; padding:0; font-size:15px; font-weight:600; align-items:center; }
   nav.primary-nav a{ text-decoration:none; color:var(--ink); padding:8px 1px; display:inline-flex; align-items:center; gap:5px; }
+  .nav-trigger{
+    font:inherit; text-decoration:none; color:var(--ink); padding:8px 1px; display:inline-flex; align-items:center; gap:5px;
+    background:none; border:none; cursor:pointer;
+  }
+  .nav-trigger:hover{ color:var(--green-bright); }
   nav.primary-nav a:hover{ color:var(--green-bright); }
   .chev{ width:9px; height:9px; border-right:1.6px solid currentColor; border-bottom:1.6px solid currentColor; transform:rotate(45deg); margin-top:-3px; opacity:.7; }
   .has-dropdown{ position:relative; }
@@ -80,7 +85,7 @@
     border:1px solid var(--stone); padding:14px; min-width:280px;
     opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease;
   }
-  .has-dropdown:hover .dropdown-panel, .has-dropdown:focus-within .dropdown-panel{
+  .has-dropdown:hover .dropdown-panel, .has-dropdown:focus-within .dropdown-panel, .has-dropdown.is-open .dropdown-panel{
     opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0);
   }
   .dropdown-panel a{ display:block; padding:10px 12px; border-radius:6px; font-weight:600; font-size:14.5px; }
@@ -390,11 +395,11 @@
     <nav class="primary-nav" aria-label="Primary">
       <ul>
         <li class="has-dropdown">
-          <a href="#services">Services <span class="chev"></span></a>
-          <div class="dropdown-panel">
+          <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="servicesDropdown">Services <span class="chev"></span></button>
+          <div class="dropdown-panel" id="servicesDropdown">
             <a href="#services">HR Consulting Services</a>
             <a href="#hr-review">HR Audit &amp; Review</a>
-            <a href="#hr-foundations">HR Foundations &amp; Compliance</a>
+            <a href="hr-foundations.html">HR Foundations &amp; Compliance</a>
             <a href="#organisation-design">Organisation Design &amp; Role Clarity</a>
             <a href="#performance-reward">Performance &amp; Reward</a>
             <a href="#hr-advisory">HR Advisory</a>
@@ -476,7 +481,7 @@
           </a>
         </li>
         <li>
-          <a class="feature-card" href="#hr-foundations">
+          <a class="feature-card" href="hr-foundations.html">
             <span class="feature-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
             <div class="feature-card__body">
               <h3>Our HR foundations need strengthening</h3>
@@ -543,7 +548,7 @@
       </div>
       <ul class="capability-grid reveal-stagger">
         <li>
-          <a class="capability-card" href="#hr-foundations">
+          <a class="capability-card" href="hr-foundations.html">
             <span class="capability-card__index">01</span>
             <h3>HR Foundations &amp; Compliance</h3>
             <p>Strengthen employment documentation, HR policies, handbooks, onboarding, employee records and the core processes that support a consistent employee experience.</p>
@@ -658,7 +663,7 @@
         <h4>HR Solutions</h4>
         <ul>
           <li><a href="#hr-review">HR Review</a></li>
-          <li><a href="#hr-foundations">HR Foundations &amp; Compliance</a></li>
+          <li><a href="hr-foundations.html">HR Foundations &amp; Compliance</a></li>
           <li><a href="#organisation-design">Organisation Design &amp; Role Clarity</a></li>
           <li><a href="#performance-reward">Performance &amp; Reward</a></li>
           <li><a href="#hr-advisory">HR Advisory</a></li>
@@ -694,6 +699,36 @@
 </footer>
 
 <script>
+  // Services dropdown: click-to-toggle (works on touch and with mouse), closes on
+  // outside click or Escape. Hover still works for desktop mouse users via CSS alone;
+  // this just adds the click behavior the trigger needs since it's a <button>, not a link.
+  (function(){
+    var dropdownLi = document.querySelector('.has-dropdown');
+    if(!dropdownLi) return;
+    var trigger = dropdownLi.querySelector('.nav-trigger');
+    if(!trigger) return;
+
+    function close(){
+      dropdownLi.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    function open(){
+      dropdownLi.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      if(dropdownLi.classList.contains('is-open')) close(); else open();
+    });
+    document.addEventListener('click', function(e){
+      if(!dropdownLi.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') close();
+    });
+  })();
+
   var toggle = document.getElementById('menuToggle');
   var nav = document.getElementById('mobileNav');
   toggle.addEventListener('click', function(){
