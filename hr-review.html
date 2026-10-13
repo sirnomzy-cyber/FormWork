@@ -548,7 +548,7 @@
 @media (max-width:719px){ .company-info{ padding:64px 0; } }
 
 /* ---- added in rebuild ---- */
-.dropdown-panel::before{ content:""; position:absolute; left:0; right:0; top:-20px; height:20px; }
+.dropdown-panel::before{ content:""; position:absolute; left:0; right:0; top:-24px; height:24px; }
 nav a.is-current, .primary-nav a.is-current{ color:var(--green-bright); }
 /* flow diagram (Organisation Design, Performance & Reward) */
 .flow-diagram{ display:flex; flex-direction:column; align-items:stretch; gap:10px; margin:8px 0 28px; }
@@ -691,6 +691,12 @@ nav a.is-current, .primary-nav a.is-current{ color:var(--green-bright); }
   .svc-cards li:last-child:nth-child(odd) img{ width:46%; aspect-ratio:auto; min-height:260px; }
   .svc-cards li:last-child:nth-child(odd) .svc-cards__body{ justify-content:center; }
 }
+.svc-cta-band__actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+.btn--ghost-light{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.55); }
+.btn--ghost-light:hover{ background:#fff; color:var(--ink); border-color:#fff; }
+.svc-hero--toolkit .svc-hero__media::before, .svc-hero--toolkit .svc-hero__media::after{ display:none; }
+.svc-hero--toolkit .folder-panel{ position:relative; z-index:1; }
+.price-line{ font-family:var(--serif); font-size:clamp(34px,4vw,46px); font-weight:800; color:var(--ink); margin:6px 0 4px; }
 
 /* ===== service page redesign (sv-*) ===== */
 .sv-hero{ position:relative; background:var(--ivory); padding:56px 0 88px; overflow:hidden; }
